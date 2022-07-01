@@ -3,7 +3,7 @@ package trace
 import (
 	"fmt"
 
-	"github.com/imkuqin-zw/yggdrail-gorm/plugin"
+	"github.com/imkuqin-zw/yggdrasil-gorm/plugin"
 	"gorm.io/gorm"
 )
 

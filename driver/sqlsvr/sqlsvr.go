@@ -1,7 +1,7 @@
 package sqlsvr
 
 import (
-	"github.com/imkuqin-zw/yggdrail-gorm/driver"
+	"github.com/imkuqin-zw/yggdrasil-gorm/driver"
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 )

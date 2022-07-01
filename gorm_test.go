@@ -3,7 +3,7 @@ package xgorm
 import (
 	"testing"
 
-	_ "github.com/imkuqin-zw/yggdrail-gorm/driver/mysql"
+	_ "github.com/imkuqin-zw/yggdrasil-gorm/driver/mysql"
 	"github.com/imkuqin-zw/yggdrasil/pkg/config"
 	"github.com/stretchr/testify/assert"
 )

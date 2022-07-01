@@ -1,4 +1,4 @@
-module github.com/imkuqin-zw/yggdrail-gorm
+module github.com/imkuqin-zw/yggdrasil-gorm
 
 go 1.16
 

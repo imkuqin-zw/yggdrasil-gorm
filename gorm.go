@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/imkuqin-zw/yggdrail-gorm/driver"
-	"github.com/imkuqin-zw/yggdrail-gorm/plugin"
+	"github.com/imkuqin-zw/yggdrasil-gorm/driver"
+	"github.com/imkuqin-zw/yggdrasil-gorm/plugin"
 	"github.com/imkuqin-zw/yggdrasil/pkg/config"
 	"github.com/imkuqin-zw/yggdrasil/pkg/log"
 	"gorm.io/gorm"
