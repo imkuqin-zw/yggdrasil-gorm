@@ -167,8 +167,8 @@ github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
-github.com/imkuqin-zw/yggdrasil v1.0.1 h1:B7PiOvAqtjJGNWNhgq6/ZdOhd2IrMgJ116E0iWFG8iQ=
-github.com/imkuqin-zw/yggdrasil v1.0.1/go.mod h1:9YwmukH3rJ5IhWnVZgOHQpXgkr0AZHUXntWqxHImDiY=
+github.com/imkuqin-zw/yggdrasil v1.0.2 h1:g63lqiod4EXdxwQ19Npx/RMji/gAVOf8E75xuBv8tbU=
+github.com/imkuqin-zw/yggdrasil v1.0.2/go.mod h1:9YwmukH3rJ5IhWnVZgOHQpXgkr0AZHUXntWqxHImDiY=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.1.4 h1:tHnRBy1i5F2Dh8BAFxqFzxKqqvezXrL2OW1TnX+Mlas=
