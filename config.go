@@ -32,11 +32,14 @@ type Config struct {
 	// 慢日志阈值
 	SlowThreshold time.Duration
 
-	Plugins string
+	Plugins []string
 }
 
 // Check
 func (config *Config) SetDefault() {
+	if config.Driver == "" {
+		config.Driver = "mysql"
+	}
 	if config.MaxIdleConn == 0 {
 		config.MaxIdleConn = defaultMaxIdleConn
 	}

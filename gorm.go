@@ -2,7 +2,6 @@ package xgorm
 
 import (
 	"context"
-	"strings"
 	"time"
 
 	"github.com/imkuqin-zw/yggdrasil-gorm/driver"
@@ -48,13 +47,10 @@ func Open(config *Config) *gorm.DB {
 	sqlDb.SetMaxIdleConns(config.MaxIdleConn)
 	sqlDb.SetConnMaxLifetime(config.ConnMaxLifetime)
 
-	if len(config.Plugins) > 0 {
-		plugins := strings.Split(config.Plugins, ",")
-		for _, name := range plugins {
-			if err := db.Use(plugin.GetPlugin(name, config.Name)); err != nil {
-				log.Fatalf("fault to use plugin, error: %+v", err)
-				return nil
-			}
+	for _, name := range config.Plugins {
+		if err := db.Use(plugin.GetPlugin(name, config.Name)); err != nil {
+			log.Fatalf("fault to use plugin, error: %+v", err)
+			return nil
 		}
 	}
 
@@ -72,9 +68,9 @@ func NewDB(name string) *gorm.DB {
 	if err := config.Get("gorm." + name).Scan(c); err != nil {
 		log.Fatalf("fault to load gorm config, error: %s", err.Error())
 	}
-	plugins := config.Get("gorm.global.plugins").String("")
-	if len(plugins) > 0 && len(c.Plugins) > 0 {
-		c.Plugins = plugins + "," + c.Plugins
+	plugins := config.Get("gorm.global.plugins").StringSlice([]string{})
+	if len(plugins) > 0 {
+		c.Plugins = append(plugins, c.Plugins...)
 	}
 	return Open(c)
 }
