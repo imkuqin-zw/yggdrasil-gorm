@@ -13,46 +13,7 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-type DB = gorm.DB
-
-var (
-	// ErrRecordNotFound record not found error
-	ErrRecordNotFound = gorm.ErrRecordNotFound
-	// ErrInvalidTransaction invalid transaction when you are trying to `Commit` or `Rollback`
-	ErrInvalidTransaction = gorm.ErrInvalidTransaction
-	// ErrNotImplemented not implemented
-	ErrNotImplemented = gorm.ErrNotImplemented
-	// ErrMissingWhereClause missing where clause
-	ErrMissingWhereClause = gorm.ErrMissingWhereClause
-	// ErrUnsupportedRelation unsupported relations
-	ErrUnsupportedRelation = gorm.ErrUnsupportedRelation
-	// ErrPrimaryKeyRequired primary keys required
-	ErrPrimaryKeyRequired = gorm.ErrPrimaryKeyRequired
-	// ErrModelValueRequired model value required
-	ErrModelValueRequired = gorm.ErrModelValueRequired
-	// ErrInvalidData unsupported data
-	ErrInvalidData = gorm.ErrInvalidData
-	// ErrUnsupportedDriver unsupported driver
-	ErrUnsupportedDriver = gorm.ErrUnsupportedDriver
-	// ErrRegistered registered
-	ErrRegistered = gorm.ErrRegistered
-	// ErrInvalidField invalid field
-	ErrInvalidField = gorm.ErrInvalidField
-	// ErrEmptySlice empty slice found
-	ErrEmptySlice = gorm.ErrEmptySlice
-	// ErrDryRunModeUnsupported dry run mode unsupported
-	ErrDryRunModeUnsupported = gorm.ErrDryRunModeUnsupported
-	// ErrInvalidDB invalid db
-	ErrInvalidDB = gorm.ErrInvalidDB
-	// ErrInvalidValue invalid value
-	ErrInvalidValue = gorm.ErrInvalidValue
-	// ErrInvalidValueOfLength invalid values do not match length
-	ErrInvalidValueOfLength = gorm.ErrInvalidValueOfLength
-	// ErrPreloadNotAllowed preload is not allowed when count is used
-	ErrPreloadNotAllowed = gorm.ErrPreloadNotAllowed
-)
-
-func Open(config *Config) *DB {
+func Open(config *Config) *gorm.DB {
 	config.SetDefault()
 	cfg := &gorm.Config{
 		SkipDefaultTransaction: config.SkipDefaultTransaction,
@@ -106,7 +67,7 @@ func Open(config *Config) *DB {
 	return db
 }
 
-func NewDB(name string) *DB {
+func NewDB(name string) *gorm.DB {
 	c := new(Config)
 	if err := config.Get("gorm." + name).Scan(c); err != nil {
 		log.Fatalf("fault to load gorm config, error: %s", err.Error())
