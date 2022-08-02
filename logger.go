@@ -2,7 +2,7 @@ package xgorm
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
 
@@ -17,39 +17,36 @@ type logger struct {
 }
 
 func (l *logger) Info(ctx context.Context, s string, i ...interface{}) {
-	log.Infof(strings.TrimRight(s, "\n"), i...)
+	log.InfoFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
 }
 
 func (l *logger) Warn(ctx context.Context, s string, i ...interface{}) {
-	log.Warnf(strings.TrimRight(s, "\n"), i...)
+	log.WarnFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
 }
 
 func (l *logger) Error(ctx context.Context, s string, i ...interface{}) {
-	log.Errorf(strings.TrimRight(s, "\n"), i...)
+	log.ErrorFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
 }
 
 func (l *logger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
 	cost := time.Since(begin)
 	sql, rows := fc()
-	fields := map[string]interface{}{
-		"sql":  sql,
-		"cost": cost.Seconds(),
-		"rows": rows,
+	fields := []log.Field{
+		log.String("sql", sql),
+		log.Duration("cost", cost),
+		log.Int64("rows", rows),
+		log.Context(ctx),
 	}
 	if err != nil && err != gorm.ErrRecordNotFound {
-		fields["err"] = err
-		data, _ := json.Marshal(fields)
-		log.Errorf("%s\t%s", "gorm", string(data))
+		log.ErrorFiled("gorm", append(fields, log.Err(err))...)
 		return
 	}
 	if l.slowThreshold < cost && log.Enable(types.LvWarn) {
-		data, _ := json.Marshal(fields)
-		log.Warnf("%s\t%s", "gorm", string(data))
+		log.WarnFiled("gorm", fields...)
 		return
 	}
 	if log.Enable(types.LvDebug) {
-		data, _ := json.Marshal(fields)
-		log.Debugf("%s\t%s", "gorm", string(data))
+		log.DebugFiled("gorm", fields...)
 	}
 	return
 }
