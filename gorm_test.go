@@ -17,7 +17,7 @@ type Client struct {
 func TestNewDB(t *testing.T) {
 	config.Set("gorm.test.driver", "mysql")
 	config.Set("gorm.test.nameStrategy.singularTable", true)
-	config.Set("gorm.test.dsn", "root:nihao123,./@tcp(sh-cynosdbmysql-grp-3r7tf1qw.sql.tencentcdb.com:21903)/uuid?charset=utf8mb4&parseTime=True&loc=Local")
+	config.Set("gorm.test.dsn", "root:12345678@tcp(127.0.0.1)/uuid?charset=utf8&parseTime=True&loc=Local")
 	db := NewDB("test")
 	client := &Client{}
 	b, err := FindOne(db, client)
