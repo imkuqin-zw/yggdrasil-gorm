@@ -6,8 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/imkuqin-zw/yggdrasil/pkg/log"
-	"github.com/imkuqin-zw/yggdrasil/pkg/types"
+	lg "github.com/imkuqin-zw/yggdrasil/pkg/logger"
 	"gorm.io/gorm"
 	gormlog "gorm.io/gorm/logger"
 )
@@ -17,40 +16,40 @@ type logger struct {
 }
 
 func (l *logger) Info(ctx context.Context, s string, i ...interface{}) {
-	log.InfoFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
+	lg.InfoFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Warn(ctx context.Context, s string, i ...interface{}) {
-	log.WarnFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
+	lg.WarnFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Error(ctx context.Context, s string, i ...interface{}) {
-	log.ErrorFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), log.Context(ctx))
+	lg.ErrorFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
 	cost := time.Since(begin)
 	sql, rows := fc()
-	fields := []log.Field{
-		log.String("sql", sql),
-		log.Duration("cost", cost),
-		log.Int64("rows", rows),
-		log.Context(ctx),
+	fields := []lg.Field{
+		lg.String("sql", sql),
+		lg.Duration("cost", cost),
+		lg.Int64("rows", rows),
+		lg.Context(ctx),
 	}
 	if err != nil && err != gorm.ErrRecordNotFound {
-		log.ErrorFiled("gorm", append(fields, log.Err(err))...)
+		lg.ErrorFiled("gorm", append(fields, lg.Err(err))...)
 		return
 	}
-	if l.slowThreshold < cost && log.Enable(types.LvWarn) {
-		log.WarnFiled("gorm", fields...)
+	if l.slowThreshold < cost && lg.Enable(lg.LvWarn) {
+		lg.WarnFiled("gorm", fields...)
 		return
 	}
-	if log.Enable(types.LvDebug) {
-		log.DebugFiled("gorm", fields...)
+	if lg.Enable(lg.LvDebug) {
+		lg.DebugFiled("gorm", fields...)
 	}
 	return
 }
 
-func (l *logger) LogMode(level gormlog.LogLevel) gormlog.Interface {
+func (l *logger) LogMode(_ gormlog.LogLevel) gormlog.Interface {
 	return l
 }
