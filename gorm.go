@@ -29,12 +29,12 @@ func Open(config *Config) *gorm.DB {
 	}
 	f := driver.GetFactory(config.Driver)
 	if f == nil {
-		lg.FatalFiled("unknown gorm driver", lg.String("name", config.Driver))
+		lg.FatalField("unknown gorm driver", lg.String("name", config.Driver))
 		return nil
 	}
 	db, err := gorm.Open(f(config.DSN), cfg)
 	if err != nil {
-		lg.FatalFiled("fault to connect mysql", lg.Err(err))
+		lg.FatalField("fault to connect mysql", lg.Err(err))
 		return nil
 	}
 
@@ -49,7 +49,7 @@ func Open(config *Config) *gorm.DB {
 
 	for _, name := range config.Plugins {
 		if err := db.Use(plugin.GetPlugin(name, config.Name)); err != nil {
-			lg.FatalFiled("fault to use plugin", lg.Err(err))
+			lg.FatalField("fault to use plugin", lg.Err(err))
 			return nil
 		}
 	}
@@ -57,7 +57,7 @@ func Open(config *Config) *gorm.DB {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*3)
 	defer cancel()
 	if err := sqlDb.PingContext(ctx); err != nil {
-		lg.FatalFiled("fault to ping mysql", lg.Err(err))
+		lg.FatalField("fault to ping mysql", lg.Err(err))
 		return nil
 	}
 	return db
@@ -66,7 +66,7 @@ func Open(config *Config) *gorm.DB {
 func NewDB(name string) *gorm.DB {
 	c := new(Config)
 	if err := config.Get("gorm." + name).Scan(c); err != nil {
-		lg.FatalFiled("fault to load gorm config", lg.Err(err))
+		lg.FatalField("fault to load gorm config", lg.Err(err))
 	}
 	plugins := config.Get("gorm.global.plugins").StringSlice([]string{})
 	if len(plugins) > 0 {

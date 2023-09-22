@@ -16,15 +16,15 @@ type logger struct {
 }
 
 func (l *logger) Info(ctx context.Context, s string, i ...interface{}) {
-	lg.InfoFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
+	lg.InfoField(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Warn(ctx context.Context, s string, i ...interface{}) {
-	lg.WarnFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
+	lg.WarnField(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Error(ctx context.Context, s string, i ...interface{}) {
-	lg.ErrorFiled(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
+	lg.ErrorField(fmt.Sprintf(strings.TrimRight(s, "\n"), i...), lg.Context(ctx))
 }
 
 func (l *logger) Trace(ctx context.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
@@ -37,15 +37,15 @@ func (l *logger) Trace(ctx context.Context, begin time.Time, fc func() (sql stri
 		lg.Context(ctx),
 	}
 	if err != nil && err != gorm.ErrRecordNotFound {
-		lg.ErrorFiled("gorm", append(fields, lg.Err(err))...)
+		lg.ErrorField("gorm", append(fields, lg.Err(err))...)
 		return
 	}
 	if l.slowThreshold < cost && lg.Enable(lg.LvWarn) {
-		lg.WarnFiled("gorm", fields...)
+		lg.WarnField("gorm", fields...)
 		return
 	}
 	if lg.Enable(lg.LvDebug) {
-		lg.DebugFiled("gorm", fields...)
+		lg.DebugField("gorm", fields...)
 	}
 	return
 }

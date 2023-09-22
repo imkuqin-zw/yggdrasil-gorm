@@ -3,7 +3,7 @@ module github.com/imkuqin-zw/yggdrasil-gorm
 go 1.19
 
 require (
-	github.com/imkuqin-zw/yggdrasil v1.1.0
+	github.com/imkuqin-zw/yggdrasil v1.2.1
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.1
 	go.opentelemetry.io/otel v1.13.0
